@@ -1,0 +1,229 @@
+#####################################################################
+# |<    4-bits    >|<      1-bit      >|<    1-bit   >|<   8-bits  >|
+# +----------------+-------------------+--------------+-------------+
+# | replay command | 0:update 1:enable | update value | 8 neighbors |
+# +----------------+-------------------+--------------+-------------+
+#####################################################################
+
+# EXAMPLES:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b01000100
+0001__1_0_01000100
+# Recv 1, a live cell with two live neighbours lives on to the next generation.
+0010__000000000_1
+
+
+# TODO: Add more testing traces here!!!
+# Please create at least 20 test cases:
+# Set the update value to 0, then set enbale to 1 and test with 0-8 live neighbors
+# Set the update value to 1, then set enbale to 1 and test with 0-8 live neighbors
+
+# CASE 1:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b01000110
+0001__1_0_01000110
+# Recv 1, a live cell with three live neighbours lives 
+0010__000000000_1
+
+# CASE 2:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b01000111
+0001__1_0_01000111
+# Recv 0, a live cell with four live neighbours dies 
+0010__000000000_0
+
+# CASE 3:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b01001111
+0001__1_0_01001111
+# Recv 0, a live cell with five live neighbours dies 
+0010__000000000_0
+
+# CASE 4:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11001111
+0001__1_0_11001111
+# Recv 0, a live cell with six live neighbours dies 
+0010__000000000_0
+
+# CASE 5:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11101111
+0001__1_0_11101111
+# Recv 0, a live cell with seven live neighbours dies 
+0010__000000000_0
+
+# CASE 6:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11111111
+0001__1_0_11111111
+# Recv 0, a live cell with eight live neighbours dies 
+0010__000000000_0
+
+# CASE 7:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11111111
+0001__1_0_11111111
+# Recv 0, a dead cell with eight live neighbours stays dead 
+0010__000000000_0
+# Finish simulation
+0100__0_0_00000000
+
+# CASE 8:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11110011
+0001__1_0_11110011
+# Recv 0, a dead cell with six live neighbours stays dead 
+0010__000000000_0
+# Finish simulation
+0100__0_0_00000000
+
+# CASE 9:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b00100011
+0001__1_0_00100011
+# Recv 1, a dead cell with three live neighbours comes alive 
+0010__000000000_1
+
+# CASE 10:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b10000011
+0001__1_0_10000011
+# Recv 1, a dead cell with three live neighbours comes alive 
+0010__000000000_1
+
+# CASE 11:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11000011
+0001__1_0_11000011
+# Recv 0, a dead cell with four live neighbours stays dead
+0010__000000000_0
+
+# CASE 12:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11000111
+0001__1_0_11000111
+# Recv 0, a dead cell with five live neighbours stays dead
+0010__000000000_0
+
+# CASE 13:
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, dead cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11010111
+0001__1_0_11010111
+# Recv 0, a dead cell with six live neighbours stays dead
+0010__000000000_0
+
+# CASE 14:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11110111
+0001__1_0_11110111
+# Recv 0, an alive cell with seven live neighbours dies 
+0010__000000000_0
+
+# CASE 15:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b10100000
+0001__1_0_10100000
+# Recv 1, an alive cell with two live neighbours stays alive 
+0010__000000000_1
+
+# CASE 16:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b10100001
+0001__1_0_10100001
+# Recv 1, an alive cell with three live neighbours stays alive 
+0010__000000000_1
+
+# CASE 17:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11100001
+0001__1_0_11100001
+# Recv 0, an alive cell with four live neighbours dies 
+0010__000000000_0
+
+# CASE 18:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11010001
+0001__1_0_11010001
+# Recv 0, an alive cell with four live neighbours dies 
+0010__000000000_0
+
+# CASE 19:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11010011
+0001__1_0_11010011
+# Recv 0, an alive cell with five live neighbours dies 
+0010__000000000_0
+
+# CASE 20:
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, alive cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11010000
+0001__1_0_11010000
+# Recv 1, an alive cell with three live neighbours stays alive 
+0010__000000000_1
+
+# Finish simulation
+0100__0_0_00000000
